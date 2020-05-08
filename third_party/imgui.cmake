@@ -6,14 +6,16 @@ include_directories(${GL3W_DIR})
 file(GLOB GL3W_SRC "${GL3W_DIR}/GL/*.c")
 
 file(GLOB IMGUI_SRC "${CMAKE_CURRENT_LIST_DIR}/imgui/*.cpp")
-set(IMGUI_SDL_OPENGL3_IMPL_SRC 
+set(IMGUI_IMPL_SRC 
     ${CMAKE_CURRENT_LIST_DIR}/imgui/examples/imgui_impl_sdl.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/imgui/examples/imgui_impl_glfw.cpp
     ${CMAKE_CURRENT_LIST_DIR}/imgui/examples/imgui_impl_opengl3.cpp)
 
 set(IMGUI_LIBRARY imgui)
-add_library(${IMGUI_LIBRARY} STATIC ${IMGUI_SRC} ${IMGUI_SDL_OPENGL3_IMPL_SRC} ${GL3W_SRC})
+add_library(${IMGUI_LIBRARY} STATIC ${IMGUI_SRC} ${IMGUI_IMPL_SRC} ${GL3W_SRC})
 
 include (FindOpenGL)
-target_link_libraries(${IMGUI_LIBRARY} ${OPENGL_gl_LIBRARY})
 target_link_libraries(${IMGUI_LIBRARY} ${OPENGL_LIBRARIES})
+target_link_libraries(${IMGUI_LIBRARY} ${SDL2_LIBRARY})
+target_link_libraries(${IMGUI_LIBRARY} ${glfw_target})
 
